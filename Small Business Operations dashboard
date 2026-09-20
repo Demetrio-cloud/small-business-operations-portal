@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoOps - Small Business Dashboard</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter for clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            500: '#3b82f6', // Calm blue
+                            600: '#2563eb',
+                        },
+                        darkbase: '#111827', // Dark gray, not pure black to reduce eye strain
+                        darkcard: '#1f2937'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for a polished look */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+        
+        /* Smooth transitions for interactive elements */
+        .hover-row { transition: background-color 0.2s ease; }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 dark:bg-darkbase dark:text-gray-100 transition-colors duration-300 font-sans antialiased selection:bg-brand-500 selection:text-white">
+    
+    <div class="flex h-screen overflow-hidden">
+        
+        <!-- Sidebar -->
+        <aside class="hidden w-64 overflow-y-auto border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-darkcard md:block flex-shrink-0 transition-colors duration-300">
+            <div class="flex h-16 items-center justify-center border-b border-gray-200 dark:border-gray-800 px-6">
+                <span class="text-xl font-bold tracking-wider text-brand-500"><i class="fa-solid fa-wrench mr-2"></i>AutoOps</span>
+            </div>
+            <nav class="mt-6 px-4 space-y-2">
+                <a href="#" class="flex items-center gap-3 rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-500/10 dark:text-brand-500 px-4 py-3 font-medium transition-colors">
+                    <i class="fa-solid fa-chart-pie w-5"></i>
+                    Dashboard
+                </a>
+                <a href="#" class="flex items-center gap-3 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100 px-4 py-3 font-medium transition-colors">
+                    <i class="fa-regular fa-calendar-check w-5"></i>
+                    Appointments
+                </a>
+                <a href="#" class="flex items-center gap-3 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100 px-4 py-3 font-medium transition-colors">
+                    <i class="fa-solid fa-boxes-stacked w-5"></i>
+                    Inventory
+                </a>
+                <a href="#" class="flex items-center gap-3 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100 px-4 py-3 font-medium transition-colors">
+                    <i class="fa-regular fa-comments w-5"></i>
+                    Client Comms
+                </a>
+                <a href="#" class="flex items-center gap-3 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100 px-4 py-3 font-medium transition-colors">
+                    <i class="fa-solid fa-gear w-5"></i>
+                    Settings
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex flex-1 flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-darkcard sm:px-6 transition-colors duration-300">
+                <div class="flex items-center">
+                    <button class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white md:hidden mr-4">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                    <h1 class="text-xl font-semibold">Today's Overview</h1>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <!-- Dark Mode Toggle Button -->
+                    <button id="theme-toggle" class="rounded-full p-2 text-gray-500 hover:bg-gray-100 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-800 transition-colors">
+                        <i id="theme-toggle-dark-icon" class="fa-solid fa-moon hidden text-lg"></i>
+                        <i id="theme-toggle-light-icon" class="fa-solid fa-sun hidden text-lg"></i>
+                    </button>
+                    
+                    <!-- Profile Placeholder -->
+                    <div class="h-8 w-8 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold text-sm shadow-sm">
+                        DP
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+                
+                <!-- Quick Stats Row -->
+                <div class="grid grid-cols-2 gap-4 mb-6 lg:grid-cols-4 lg:gap-6">
+                    <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-darkcard">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Appointments</p>
+                        <p class="mt-2 text-3xl font-semibold">12</p>
+                    </div>
+                    <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-darkcard">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Vehicles in Bay</p>
+                        <p class="mt-2 text-3xl font-semibold text-brand-500">4</p>
+                    </div>
+                    <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-darkcard">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Pending Messages</p>
+                        <p class="mt-2 text-3xl font-semibold text-yellow-500">3</p>
+                    </div>
+                    <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-darkcard">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Low Stock Alerts</p>
+                        <p class="mt-2 text-3xl font-semibold text-red-500">2</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
+                    
+                    <!-- Daily Appointments (Spans 2 columns on large screens) -->
+                    <div class="xl:col-span-2 rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-darkcard overflow-hidden flex flex-col">
+                        <div class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex justify-between items-center">
+                            <h2 class="text-lg font-semibold"><i class="fa-solid fa-clock-rotate-left mr-2 text-gray-400"></i>Daily Appointments</h2>
+                            <button class="text-sm text-brand-500 hover:text-brand-600 font-medium">View Calendar</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+                                <thead class="bg-gray-50 dark:bg-gray-800/50 text-xs uppercase text-gray-700 dark:text-gray-300">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">Time</th>
+                                        <th scope="col" class="px-6 py-3">Client / Vehicle</th>
+                                        <th scope="col" class="px-6 py-3">Service</th>
+                                        <th scope="col" class="px-6 py-3">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="appointments-body">
+                                    <!-- Populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Side Column for Inventory & Comms -->
+                    <div class="space-y-6">
+                        
+                        <!-- Real-time Inventory Tracker -->
+                        <div class="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-darkcard">
+                            <div class="border-b border-gray-200 dark:border-gray-800 px-6 py-4">
+                                <h2 class="text-lg font-semibold"><i class="fa-solid fa-boxes-stacked mr-2 text-gray-400"></i>Critical Inventory</h2>
+                            </div>
+                            <div class="p-6">
+                                <ul class="space-y-4" id="inventory-list">
+                                    <!-- Populated by JS -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Client Communication Logs -->
+                        <div class="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-darkcard">
+                            <div class="border-b border-gray-200 dark:border-gray-800 px-6 py-4">
+                                <h2 class="text-lg font-semibold"><i class="fa-solid fa-message mr-2 text-gray-400"></i>Recent Comms</h2>
+                            </div>
+                            <div class="p-6">
+                                <div class="space-y-4" id="comms-list">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- Dark Mode Logic (Calm Interface Implementation) ---
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        const themeToggleBtn = document.getElementById('theme-toggle');
+
+        // Check local storage or system preference
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            themeToggleLightIcon.classList.remove('hidden');
+            document.documentElement.classList.add('dark');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+            document.documentElement.classList.remove('dark');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        });
+
+        // --- Mock Data Injection (Simulating Backend CMS) ---
+        
+        // 1. Appointments Data
+        const appointments = [
+            { time: "08:00 AM", client: "Sarah Jenkins", vehicle: "2019 Honda CR-V", service: "Full Synthetic Oil Change", status: "Completed", color: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400" },
+            { time: "09:30 AM", client: "Marcus Torres", vehicle: "2015 Ford F-150", service: "Brake Pad Replacement", status: "In Progress", color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400" },
+            { time: "11:00 AM", client: "Emily Chen", vehicle: "2021 Toyota Camry", service: "Diagnostics (Check Engine)", status: "Waiting", color: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300" },
+            { time: "01:00 PM", client: "David Miller", vehicle: "2018 Subaru Outback", service: "Tire Rotation & Balance", status: "Upcoming", color: "bg-brand-100 text-brand-800 dark:bg-brand-900/30 dark:text-brand-400" },
+        ];
+
+        const aptBody = document.getElementById('appointments-body');
+        appointments.forEach(apt => {
+            aptBody.innerHTML += `
+                <tr class="border-b border-gray-100 dark:border-gray-800 hover-row hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                    <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">${apt.time}</td>
+                    <td class="px-6 py-4">
+                        <div class="font-medium text-gray-900 dark:text-white">${apt.client}</div>
+                        <div class="text-xs text-gray-500">${apt.vehicle}</div>
+                    </td>
+                    <td class="px-6 py-4">${apt.service}</td>
+                    <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${apt.color}">
+                            ${apt.status}
+                        </span>
+                    </td>
+                </tr>
+            `;
+        });
+
+        // 2. Inventory Data
+        const inventory = [
+            { item: "5W-30 Synthetic Oil", qty: "8 quarts", status: "Low", icon: "fa-oil-can", alert: true },
+            { item: "Ceramic Brake Pads", qty: "12 sets", status: "Good", icon: "fa-circle-notch", alert: false },
+            { item: "Air Filters (Standard)", qty: "3 units", status: "Critical", icon: "fa-wind", alert: true }
+        ];
+
+        const invList = document.getElementById('inventory-list');
+        inventory.forEach(inv => {
+            const textColor = inv.alert ? (inv.status === 'Critical' ? 'text-red-500' : 'text-yellow-500') : 'text-green-500';
+            invList.innerHTML += `
+                <li class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-500">
+                            <i class="fa-solid ${inv.icon} text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-900 dark:text-white">${inv.item}</p>
+                            <p class="text-xs text-gray-500">${inv.qty} remaining</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-semibold ${textColor}">${inv.status}</span>
+                </li>
+            `;
+        });
+
+        // 3. Communications Data
+        const comms = [
+            { client: "Marcus Torres", msg: "Are my brakes done yet?", time: "10 mins ago", unread: true },
+            { client: "Emily Chen", msg: "Dropping off the car in 15 mins.", time: "1 hour ago", unread: false },
+            { client: "Sarah Jenkins", msg: "Thanks for the quick oil change!", time: "2 hours ago", unread: false }
+        ];
+
+        const commsList = document.getElementById('comms-list');
+        comms.forEach(c => {
+            const dot = c.unread ? '<div class="h-2 w-2 rounded-full bg-brand-500 mt-1.5"></div>' : '';
+            const fw = c.unread ? 'font-semibold text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400';
+            commsList.innerHTML += `
+                <div class="flex items-start gap-3 rounded-lg p-2 transition hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-xs font-bold text-gray-600 dark:text-gray-300 flex-shrink-0">
+                        ${c.client.charAt(0)}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-baseline">
+                            <p class="text-sm font-medium text-gray-900 dark:text-white truncate">${c.client}</p>
+                            <p class="text-xs text-gray-500 flex-shrink-0">${c.time}</p>
+                        </div>
+                        <p class="text-sm truncate ${fw}">${c.msg}</p>
+                    </div>
+                    ${dot}
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
