@@ -86,13 +86,15 @@
                     <h1 class="text-xl font-semibold">Today's Overview</h1>
                 </div>
                 
-                <div class="flex items-center gap-4">
-                    <!-- Dark Mode Toggle Button -->
-                    <button id="theme-toggle" class="rounded-full p-2 text-gray-500 hover:bg-gray-100 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-800 transition-colors">
-                        <i id="theme-toggle-dark-icon" class="fa-solid fa-moon hidden text-lg"></i>
-                        <i id="theme-toggle-light-icon" class="fa-solid fa-sun hidden text-lg"></i>
-                    </button>
-                    
+                <div class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex justify-between items-center">
+    <h2 class="text-lg font-semibold"><i class="fa-solid fa-clock-rotate-left mr-2 text-gray-400"></i>Daily Appointments</h2>
+    <div class="flex gap-3">
+        <button class="text-sm text-brand-500 hover:text-brand-600 font-medium hidden sm:block">View Calendar</button>
+        <button class="flex items-center gap-2 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:focus:ring-offset-darkcard">
+            <i class="fa-solid fa-plus"></i> New Appointment
+        </button>
+    </div>
+</div>
                     <!-- Profile Placeholder -->
                     <div class="h-8 w-8 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold text-sm shadow-sm">
                         DP
@@ -304,3 +306,14 @@
     </script>
 </body>
 </html>
+// --- Mobile Sidebar Toggle Logic ---
+const mobileBtn = document.querySelector('.fa-bars').parentElement;
+const sidebar = document.querySelector('aside');
+
+mobileBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('hidden');
+    sidebar.classList.toggle('absolute');
+    sidebar.classList.toggle('z-50');
+    sidebar.classList.toggle('h-full');
+    sidebar.classList.toggle('shadow-xl');
+});
